@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ver Pregunta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1><a href="/" class="inicio">StudentOverflow</a></h1>   
+        </nav>
+        <nav>
+            {% if user %}
+                <h1>¡Bienvenido!</h1>
+                <a href="{{ url_for('logout') }}" class="cerrar-sesion">Cerrar sesión</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="boton-header-blanco">Iniciar sesión</a>
+                <a href="{{ url_for('register') }}" class="boton-header">Registrarse</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        
+        <div class="pregunta">
+            <h3>{{ question.title }}</h3>
+            <p>{{ question.description }}</p>
+        </div>
+            {% if user and user == question.user_id %}
+        <form class="form-sin-formato" action="{{ url_for('eliminar_pregunta', question_id=question.id) }}" method="POST" style="display:inline;">
+            <button type="submit" class="boton-eliminar">Eliminar Pregunta</button>
+        </form>
+            {% endif %}
+
+        {% if user %}
+            <a href="{{ url_for('responder', question_id=question.id) }}" class="boton-responder">Responder</a>
+        {% else %}
+            <p class="aviso-iniciar-sesion">Debes iniciar sesión para responder.</p>
+        {% endif %}
+
+        <div class="respuestas">
+            <h4>Respuestas:</h4>
+            {% if question.answers %}
+                <ul>
+                    {% for answer in question.answers %}
+                        <li>
+                            <p class="usuario-respuesta"><strong>{{ answer.user.username }}</strong></p>
+                            <p>{{ answer.content }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No hay respuestas para esta pregunta.</p>
+            {% endif %}
+        </div>
+
+        
+
+    </main>
+</body>
+</html>

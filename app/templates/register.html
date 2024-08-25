@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrarse</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+        <h1><a href="/" class="inicio">StudentOverflow</a></h1>   
+        </nav>
+        <nav>
+        {% if user %}
+            <h1>¡Bienvenido!</h1>
+            <a href="{{ url_for('logout') }}" class="cerrar-sesion">Cerrar sesión</a>
+        {% else %}
+            <a href="{{ url_for('login') }}" class="boton-header-blanco">Iniciar sesión</a>
+            <a href="{{ url_for('register') }}" class="boton-header">Registrarse</a>
+        {% endif %}
+        </nav>
+    </header>
+    <form method="POST">
+        <h1>Registrar Cuenta</h1>
+        <label for="username"></label>
+        <input type="text" name="username" placeholder="Ingresa un nombre de usuario" required>
+        <br>
+        <label for="password"></label>
+        <input type="password" name="password" placeholder="Ingresa una contraseña" required>
+        <br>
+        <p class="redireccion">¿Ya tienes cuenta? <a class="link" href="{{ url_for('login') }}">Iniciar sesión</a></p>
+        <button type="submit">Registrarse</button>
+    </form>
+</body>
+</html>

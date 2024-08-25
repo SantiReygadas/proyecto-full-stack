@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Respuesta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1><a href="/" class="inicio">StudentOverflow</a></h1>   
+        </nav>
+        <nav>
+            {% if user %}
+                <h1>¡Bienvenido!</h1>
+                <a href="{{ url_for('logout') }}" class="cerrar-sesion">Cerrar sesión</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="boton-header-blanco">Iniciar sesión</a>
+                <a href="{{ url_for('register') }}" class="boton-header">Registrarse</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        {% if user %}
+            <section class="agregar-respuesta">
+                
+                <form action="{{ url_for('responder', question_id=question.id) }}" method="POST">
+                    <textarea name="content" rows="20" cols="48" placeholder="Escribe tu respuesta aquí..." style="resize: none;" required></textarea>
+                    <br>
+                    <button type="submit" class="boton-enviar">Enviar Respuesta</button>
+                </form>
+            </section>
+        {% else %}
+            <p>Debes iniciar sesión para responder.</p>
+        {% endif %}
+        
+        
+    </main>
+</body>
+</html>

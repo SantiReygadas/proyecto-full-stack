@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+        <h1><a href="/" class="inicio">StudentOverflow</a></h1>   
+        </nav>
+        <nav>
+        {% if user %}
+            <h1>¡Bienvenido!</h1>
+            <a href="{{ url_for('logout') }}" class="cerrar-sesion">Cerrar sesión</a>
+        {% else %}
+            <a href="{{ url_for('login') }}" class="boton-header-blanco">Iniciar sesión</a>
+            <a href="{{ url_for('register') }}" class="boton-header">Registrarse</a>
+        {% endif %}
+        </nav>
+    </header>
+    <main>
+        <div class="formulario">
+            <button class="boton-main" onclick="window.location.href='/pregunta';">Preguntar</button>
+        </div>
+        {% for question in questions %}
+            <div class="pregunta">
+                <h3>
+                    <a href="{{ url_for('ver_pregunta', question_id=question.id) }}">{{ question.title }}</a>
+                </h3>
+                <p>{{ question.description }}</p>
+            </div>
+        {% endfor %}
+    </main>
+</body>
+</html>
